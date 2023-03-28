@@ -4,20 +4,23 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { Button, CardActionArea, CardActions } from '@mui/material';
+import { Link } from 'react-router-dom';
 
 export default function ProductItem({product}) {
-    const {title, thumbnail_id, price} = product
+    const {id,title, thumbnail_id, price} = product
   return (
-    <Card sx={{ maxWidth: 200 }}>
+    <Card sx={{ maxWidth: 200 }} className="cardProduct" >
+      <Link to={`${id}`}>
       <CardActionArea>
-        <CardMedia  
+        <CardMedia 
+          className='cardMedia'
+          height={140}
           component="img"
-          height="%100"
           image={"https://http2.mlstatic.com/D_NQ_NP_"+ thumbnail_id +"-O.webp"} 
           alt={title}
         />
         <CardContent>
-          <Typography gutterBottom variant="h6" component="div">
+          <Typography gutterBottom variant="body1" component="div">
             {title}
           </Typography>
           <Typography variant="h6" color="text.secondary">
@@ -25,9 +28,10 @@ export default function ProductItem({product}) {
           </Typography>
         </CardContent>
       </CardActionArea>
+      </Link>
       <CardActions>
         <Button size="small" color="primary">
-          Share
+          AGREGAR AL CARRITO
         </Button>
       </CardActions>
     </Card>

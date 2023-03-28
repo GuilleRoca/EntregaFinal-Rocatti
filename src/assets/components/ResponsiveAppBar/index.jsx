@@ -12,8 +12,9 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
+import { Link } from "react-router-dom"
 
-const pages = ['Home', 'Productos', 'Contacto', 'Ubicación'];
+const pages = ['home', 'productos', 'contacto', 'ubicación'];
 const settings = ['Perfil', 'Account', 'Logout'];
 
 function ResponsiveAppBar() {
@@ -39,7 +40,6 @@ function ResponsiveAppBar() {
     <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
           <Typography
             variant="h6"
             noWrap
@@ -55,7 +55,9 @@ function ResponsiveAppBar() {
               textDecoration: 'none',
             }}
           >
-            LOGO
+            <div>
+              <Link to="/home"><img src="/public/super-logo.png" alt="logo" className="logo" /></Link>
+            </div>
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -89,12 +91,15 @@ function ResponsiveAppBar() {
             >
               {pages.map((page) => (
                 <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
+                  <Typography textAlign="center">
+                    <Link to={`/${page}`}>
+                      {page}
+                    </Link>  
+                  </Typography>
                 </MenuItem>
               ))}
             </Menu>
           </Box>
-          <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
           <Typography
             variant="h5"
             noWrap
@@ -111,7 +116,9 @@ function ResponsiveAppBar() {
               textDecoration: 'none',
             }}
           >
-            LOGO
+            <div>
+              <Link to="/home"><img src="/public/super-logo.png" alt="logo" className="logo" /></Link>
+            </div>
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
@@ -120,7 +127,9 @@ function ResponsiveAppBar() {
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
+                <Link to={`/${page}`}>
                 {page}
+                </Link>
               </Button>
             ))}
           </Box>

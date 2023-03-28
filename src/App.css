@@ -3,9 +3,28 @@ body{
   padding: 0px;
 }
 
-.postList{
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-around;
+.cardMedia{
+  object-fit: contain !important;
+}
+
+.cardProduct:hover{
+  transform: scale(1.3,1.3);
+  z-index: 1000;
+  box-shadow: inset;
+  border:  2px solid #AED6F1 ;
+}
+
+.containerList{
+  margin: 50px;
+}
+
+.containerCardDetail{
+  display: flex !important;
+  flex-direction: row !important;
+  justify-content: space-between !important;
+}
+
+.logo{
+  width: 80px;
+  height: auto;
 }
