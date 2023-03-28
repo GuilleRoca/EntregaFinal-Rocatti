@@ -11,7 +11,7 @@ export default function ProductDetail({}) {
     const [producto, setProducto] = useState([])
     const {id} = useParams()
     const getProducto = async () => {
-        const response = await fetch(`https://api.mercadolibre.com/items?ids=${id}`)
+        const response = await fetch(`https://api.mercadolibre.com/items?ids=${id}&attributes=id,title,category_id,price,available_quantity,thumbnail_id,pictures.secure_url`)
         const data = await response.json()
         setProducto(data[0].body)
     }
@@ -20,10 +20,8 @@ export default function ProductDetail({}) {
         getProducto()
     }, [])
 
-    console.log(producto)
 
-
-    const {title, thumbnail_id, price, available_quantity} = producto
+    const {title, thumbnail_id, price, available_quantity } = producto
 
   return (
 

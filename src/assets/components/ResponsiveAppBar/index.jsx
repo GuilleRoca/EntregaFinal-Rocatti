@@ -11,13 +11,16 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import AdbIcon from '@mui/icons-material/Adb';
 import { Link } from "react-router-dom"
 
-const pages = ['home', 'productos', 'contacto', 'ubicación'];
+
+const pages1 = ['home', 'productos'];
+const pages2 = ['contacto', 'ubicacion'];
 const settings = ['Perfil', 'Account', 'Logout'];
 
-function ResponsiveAppBar() {
+
+
+function ResponsiveAppBar({category}) {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -89,7 +92,25 @@ function ResponsiveAppBar() {
                 display: { xs: 'block', md: 'none' },
               }}
             >
-              {pages.map((page) => (
+              {pages1.map((page) => (
+                <MenuItem key={page} onClick={handleCloseNavMenu}>
+                  <Typography textAlign="center">
+                    <Link to={`/${page}`}>
+                      {page}
+                    </Link>  
+                  </Typography>
+                </MenuItem>
+              ))}
+              {category.map((categoria) => (
+                <MenuItem key={categoria.name} onClick={handleCloseNavMenu}>
+                  <Typography textAlign="center">
+                    <Link to={`/${categoria.name}`}>
+                      {categoria.name}
+                    </Link>  
+                  </Typography>
+                </MenuItem>
+              ))}
+              {pages2.map((page) => (
                 <MenuItem key={page} onClick={handleCloseNavMenu}>
                   <Typography textAlign="center">
                     <Link to={`/${page}`}>
@@ -121,7 +142,47 @@ function ResponsiveAppBar() {
             </div>
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {pages.map((page) => (
+            {pages1.map((page) => (
+              <Button
+                key={page}
+                onClick={handleCloseNavMenu}
+                sx={{ my: 2, color: 'white', display: 'block' }}
+              >
+                <Link to={`/${page}`}>
+                {page}
+                </Link>
+              </Button>
+            ))}
+            <Box sx={{ flexGrow: 0 }}>
+            <Tooltip>
+              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                Categorias
+              </IconButton>
+            </Tooltip>
+            <Menu
+              sx={{ mt: '45px' }}
+              id="menu-appbar"
+              anchorEl={anchorElUser}
+              anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              open={Boolean(anchorElUser)}
+              onClose={handleCloseUserMenu}
+            >
+              {category.map((categoria) => (
+                <MenuItem key={categoria.name} onClick={handleCloseUserMenu}>
+                  <Typography textAlign="center">{categoria.name}</Typography>
+                </MenuItem>
+              ))}
+            </Menu> 
+          </Box>
+            {pages2.map((page) => (
               <Button
                 key={page}
                 onClick={handleCloseNavMenu}
