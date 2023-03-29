@@ -10,7 +10,7 @@ export default function ProductItem({product}) {
     const {id,title, thumbnail_id, price} = product
   return (
     <Card sx={{ maxWidth: 200 }} className="cardProduct" >
-      <Link to={`item/${id}`}>
+      <Link to={`../productos/item/${id}`}>
       <CardActionArea>
         <CardMedia 
           className='cardMedia'

@@ -17,15 +17,6 @@ const ItemListContainerCategory = ({}) => {
       setCategorias(data.available_filters[0].values)
     }       
 
-    const category = categorias.map((cat) => {
-        return cat.name
-      })
-
-    console.log(category)
-    console.log(cat)
-
-
-
     const getProducto = async () => {
       const {data} = await axios.get(`https://api.mercadolibre.com/sites/MLA/search?seller_id=757579587&category=${cat}`)
       setProducto(data.results)

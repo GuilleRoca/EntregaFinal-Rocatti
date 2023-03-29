@@ -40,13 +40,6 @@ function ResponsiveAppBar() {
     return cat
   })
 
-  const categoryId = categorias.map((cat) => {
-    return cat.id
-  })
-
-  console.log(category)
-  console.log(categoryId)
-
   useEffect(() => {
     fetchCategorias()
   }, [])  
