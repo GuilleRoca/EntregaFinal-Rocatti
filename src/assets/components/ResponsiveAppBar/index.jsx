@@ -11,18 +11,45 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import { Link } from "react-router-dom"
+import AdbIcon from '@mui/icons-material/Adb';
+import { green } from '@mui/material/colors';
+import AssignmentIcon from '@mui/icons-material/Assignment';
+import { Link } from 'react-router-dom';
+import CartWidget from "../CartWidget"
+import axios from 'axios';
+import { useEffect, useState } from 'react'
 
 
 const pages1 = ['home', 'productos'];
-const pages2 = ['contacto', 'ubicacion'];
-const settings = ['Perfil', 'Account', 'Logout'];
+const pages2 = ['contacto' , 'ubicacion'];
+const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 
 
-function ResponsiveAppBar({category}) {
+function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const [categorias, setCategorias] = useState([])
+
+  const fetchCategorias = async () => {
+    const {data} = await axios.get('https://api.mercadolibre.com/sites/MLA/search?seller_id=757579587')
+    setCategorias(data.available_filters[0].values)
+  }
+
+  const category = categorias.map((cat) => {
+    return cat
+  })
+
+  const categoryId = categorias.map((cat) => {
+    return cat.id
+  })
+
+  console.log(category)
+  console.log(categoryId)
+
+  useEffect(() => {
+    fetchCategorias()
+  }, [])  
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -58,9 +85,9 @@ function ResponsiveAppBar({category}) {
               textDecoration: 'none',
             }}
           >
-            <div>
+          <div>
               <Link to="/home"><img src="/public/super-logo.png" alt="logo" className="logo" /></Link>
-            </div>
+          </div>
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -95,32 +122,33 @@ function ResponsiveAppBar({category}) {
               {pages1.map((page) => (
                 <MenuItem key={page} onClick={handleCloseNavMenu}>
                   <Typography textAlign="center">
-                    <Link to={`/${page}`}>
+                  <Link to={`/${page}`}>
                       {page}
-                    </Link>  
-                  </Typography>
+                </Link>
+                </Typography>
                 </MenuItem>
               ))}
-              {category.map((categoria) => (
-                <MenuItem key={categoria.name} onClick={handleCloseNavMenu}>
+              {category.map((cat) => (
+                <MenuItem key={cat.id} onClick={handleCloseNavMenu}>
                   <Typography textAlign="center">
-                    <Link to={`/${categoria.name}`}>
-                      {categoria.name}
-                    </Link>  
-                  </Typography>
+                  <Link to={`/productos/category/${cat.id}`}>
+                      {cat.name}
+                </Link>
+                </Typography>
                 </MenuItem>
               ))}
               {pages2.map((page) => (
                 <MenuItem key={page} onClick={handleCloseNavMenu}>
                   <Typography textAlign="center">
-                    <Link to={`/${page}`}>
+                  <Link to={`/${page}`}>
                       {page}
-                    </Link>  
-                  </Typography>
+                </Link>
+                </Typography>
                 </MenuItem>
               ))}
             </Menu>
           </Box>
+          <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
           <Typography
             variant="h5"
             noWrap
@@ -137,9 +165,9 @@ function ResponsiveAppBar({category}) {
               textDecoration: 'none',
             }}
           >
-            <div>
+          <div>
               <Link to="/home"><img src="/public/super-logo.png" alt="logo" className="logo" /></Link>
-            </div>
+          </div>
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages1.map((page) => (
@@ -149,39 +177,25 @@ function ResponsiveAppBar({category}) {
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
                 <Link to={`/${page}`}>
-                {page}
-                </Link>
+                      {page}
+                </Link> 
               </Button>
             ))}
-            <Box sx={{ flexGrow: 0 }}>
-            <Tooltip>
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                Categorias
-              </IconButton>
-            </Tooltip>
-            <Menu
-              sx={{ mt: '45px' }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              {category.map((categoria) => (
-                <MenuItem key={categoria.name} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{categoria.name}</Typography>
-                </MenuItem>
-              ))}
-            </Menu> 
           </Box>
+          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+            {category.map((cat) => (
+              <Button
+                key={cat.id}
+                onClick={handleCloseNavMenu}
+                sx={{ my: 2, color: 'white', display: 'block' }}
+              >
+                <Link to={`/productos/category/${cat.id}`}>
+                      {cat.name}
+                </Link> 
+              </Button>
+            ))}
+          </Box>
+          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages2.map((page) => (
               <Button
                 key={page}
@@ -189,16 +203,20 @@ function ResponsiveAppBar({category}) {
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
                 <Link to={`/${page}`}>
-                {page}
-                </Link>
+                      {page}
+                </Link> 
               </Button>
             ))}
           </Box>
-
+          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+            <CartWidget />
+          </Box>
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+              <Avatar sx={{ bgcolor: green[500] }}>
+                <AssignmentIcon />
+              </Avatar>
               </IconButton>
             </Tooltip>
             <Menu
