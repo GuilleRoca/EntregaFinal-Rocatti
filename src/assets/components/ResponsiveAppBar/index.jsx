@@ -11,13 +11,12 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import AdbIcon from '@mui/icons-material/Adb';
 import { green } from '@mui/material/colors';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import { Link } from 'react-router-dom';
 import CartWidget from "../CartWidget"
 import axios from 'axios';
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 
 
 const pages1 = ['home', 'productos'];
@@ -26,23 +25,16 @@ const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 
 
-function ResponsiveAppBar() {
+function ResponsiveAppBar({categories}) {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-  const [categorias, setCategorias] = useState([])
 
-  const fetchCategorias = async () => {
-    const {data} = await axios.get('https://api.mercadolibre.com/sites/MLA/search?seller_id=757579587')
-    setCategorias(data.available_filters[0].values)
-  }
 
-  const category = categorias.map((cat) => {
+  const category = categories.map((cat) => {
     return cat
   })
 
-  useEffect(() => {
-    fetchCategorias()
-  }, [])  
+
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -141,7 +133,7 @@ function ResponsiveAppBar() {
               ))}
             </Menu>
           </Box>
-          <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
+          
           <Typography
             variant="h5"
             noWrap
@@ -161,6 +153,7 @@ function ResponsiveAppBar() {
           <div>
               <Link to="/home"><img src="/public/super-logo.png" alt="logo" className="logo" /></Link>
           </div>
+          <CartWidget />
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages1.map((page) => (
@@ -201,10 +194,9 @@ function ResponsiveAppBar() {
               </Button>
             ))}
           </Box>
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+
+          <Box sx={{ flexGrow: 1 , display: { xs: 'none', md: 'flex' }}}>
             <CartWidget />
-          </Box>
-          <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
               <Avatar sx={{ bgcolor: green[500] }}>

@@ -10,8 +10,7 @@ import axios from 'axios'
 import ProductDetail from './assets/components/ProductDetail'
 import { lightGreen, lime } from '@mui/material/colors';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
-import ItemListContainerCategory from './assets/components/ItemListContainerCategory'
-
+import Spinner from './assets/components/Spinner'
 
 const theme = createTheme({
   palette: {
@@ -24,27 +23,38 @@ function App() {
   
 
   const [productos, setProductos] = useState([])
+  const [categorias, setCategorias] = useState([])
+  const [loading, setLoading] = useState(true)
 
 
   const fetchProductos = async () => {
     const {data} = await axios.get('https://api.mercadolibre.com/sites/MLA/search?seller_id=757579587')
     setProductos(data.results)
   }
-    useEffect(() => {
-      fetchProductos()
-    }, [])
-    
 
+
+  const fetchCategorias = async () => {
+    const {data} = await axios.get('https://api.mercadolibre.com/sites/MLA/search?seller_id=757579587')
+    setCategorias(data.available_filters[0].values)
+    setLoading(false)
+  }
+
+  useEffect(() => {
+    fetchProductos()
+    fetchCategorias()
+  }, [])
+    
+  if (loading) { return <Spinner/>}
 
   return <ThemeProvider theme={theme} > 
     <div>
-      <ResponsiveAppBar />
+      <ResponsiveAppBar categories={categorias} />
       <Routes >
         <Route path="/" element={<Navigate to="/home" />}/>
         <Route path="/home" element={<Home/>}/>
         <Route path="/productos" element={<ItemListContainer products={productos} />}/>
         <Route path="/productos/item/:id" element={<ProductDetail products={productos} />}/>
-        <Route path="/productos/category/:cat" element={<ItemListContainerCategory />}/>
+        <Route path="/productos/category/:cat" element={<ItemListContainer products={productos} />}/>
         <Route path="/contacto" element={<Contacto/>}/>
         <Route path="/ubicacion" element={<Ubicacion/>}/>
       </Routes>
