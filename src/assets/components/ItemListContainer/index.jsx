@@ -18,7 +18,7 @@ const ItemListContainer = ({products}) => {
   }
   useEffect(() => {
     getProductoCat()
-  },[productoCat])
+  },[cat])
 
   
   const productos = cat===null ? products : productoCat
