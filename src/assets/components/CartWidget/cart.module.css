@@ -1,0 +1,39 @@
+.cantCarrito{
+    align-items:center;
+    background-color: #4caf50;
+    border-radius:  50%;
+    color: #ffffff;
+    display: flex;
+    font-size: 20px;
+    justify-content: center;
+    line-height: 20px;
+    text-align: center;
+    height: 40px;
+    width: 40px;
+    margin-right: 5px;
+  }
+  
+  .numCarrito{
+    border-radius: 100%;
+    background-color: red;
+    width: 30px;
+    height: 20px;
+    position: relative;
+    left: 0px;
+    top: -10px;
+    text-align: center;
+    padding: 0px;
+    font-size: 20px;
+  }
+  
+  .carrito{
+    color: #ffffff;
+    display: inline;
+    fill: #ffffff;
+    font-size: 24px;
+    line-height: 24px;
+    text-align: center;
+    position: relative;
+    top: 0px;
+    left: 10px;
+  }
