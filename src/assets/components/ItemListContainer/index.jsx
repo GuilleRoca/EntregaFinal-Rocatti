@@ -4,29 +4,39 @@ import axios from "axios"
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import ProductItem from "../ProductItem"
+import Paginado from "../Paginado"
 import Spinner from "../Spinner"
 
-const ItemListContainer = ({products}) => {
+const ItemListContainer = () => {
 
-  const [productoCat, setProductoCat] = useState([])
+  const [producto, setProducto] = useState([])
+  const [pagins, setPagins] = useState([])
+  const [loading, setLoading] = useState(true)
   const {cat} = useParams()
+  const [count, setCount] = useState(1)
 
 
-  const getProductoCat = async () => {
-    const {data} = await axios.get(`https://api.mercadolibre.com/sites/MLA/search?seller_id=757579587&category=${cat}`)
-    setProductoCat(data.results)
+  const URL_API = cat===undefined ? `https://api.mercadolibre.com/sites/MLA/search?seller_id=757579587&offset=${(count-1)*50}` : `https://api.mercadolibre.com/sites/MLA/search?seller_id=757579587&category=${cat}&offset=${(count-1)*50}`
+
+  const getProducto = async () => {
+    const {data} = await axios.get(URL_API)
+    setProducto(data.results)
+    setPagins(data.paging)
+    setLoading(false)
   }
   useEffect(() => {
-    getProductoCat()
-  },[cat])
+    setCount( count > Math.ceil(pagins.total/pagins.limit) ? 1 : count)
+    getProducto()
+  },[cat, count])
 
-  
-  const productos = cat===null ? products : productoCat
 
+
+  if (loading) { return <Spinner />}
   return (
     <Container className="containerList" >
+      <Paginado count={count} setCount={setCount} totalPagins={Math.ceil(pagins.total/pagins.limit)} />
       <Grid container direction="row" justifyContent="space-around" alignItems="center" spacing={4} columns={10}>
-        {productos.map((product) => (
+        {producto.map((product) => (
           <Grid key={product.id}  item xs={5} md={2}>
             <ProductItem product={product} />
           </Grid>

@@ -15,26 +15,18 @@ import { green } from '@mui/material/colors';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import { Link } from 'react-router-dom';
 import CartWidget from "../CartWidget"
-import axios from 'axios';
-import { useEffect } from 'react'
-
 
 const pages1 = ['home', 'productos'];
 const pages2 = ['contacto' , 'ubicacion'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
-
-
 function ResponsiveAppBar({categories}) {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
-
   const category = categories.map((cat) => {
     return cat
   })
-
-
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -109,7 +101,7 @@ function ResponsiveAppBar({categories}) {
                   <Typography textAlign="center">
                   <Link to={`/${page}`}>
                       {page}
-                </Link>
+                  </Link>
                 </Typography>
                 </MenuItem>
               ))}
@@ -127,7 +119,7 @@ function ResponsiveAppBar({categories}) {
                   <Typography textAlign="center">
                   <Link to={`/${page}`}>
                       {page}
-                </Link>
+                  </Link>
                 </Typography>
                 </MenuItem>
               ))}
