@@ -155,7 +155,9 @@ function ResponsiveAppBar({categories}) {
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
                 <Link to={`/${page}`}>
-                      {page}
+                  <Typography >
+                    {page}
+                  </Typography>
                 </Link> 
               </Button>
             ))}
@@ -168,7 +170,9 @@ function ResponsiveAppBar({categories}) {
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
                 <Link to={`/productos/category/${cat.id}`}>
-                      {cat.name}
+                  <Typography >   
+                    {cat.name}
+                  </Typography >
                 </Link> 
               </Button>
             ))}
@@ -180,8 +184,10 @@ function ResponsiveAppBar({categories}) {
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
-                <Link to={`/${page}`}>
+                <Link to={`/${page}`} >
+                <Typography >
                       {page}
+                </Typography>
                 </Link> 
               </Button>
             ))}

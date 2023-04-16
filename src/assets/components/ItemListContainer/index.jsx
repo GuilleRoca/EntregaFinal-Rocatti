@@ -42,6 +42,7 @@ const ItemListContainer = () => {
           </Grid>
        ))}
       </Grid> 
+      <Paginado count={count} setCount={setCount} totalPagins={Math.ceil(pagins.total/pagins.limit)} />
     </Container>
   )
 }
