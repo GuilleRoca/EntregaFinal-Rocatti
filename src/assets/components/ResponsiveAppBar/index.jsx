@@ -18,7 +18,7 @@ import CartWidget from "../CartWidget"
 
 const pages1 = ['home', 'productos'];
 const pages2 = ['contacto' , 'ubicacion'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+const settings = ['Login', 'Logout', 'Admin', 'Registrar'];
 
 function ResponsiveAppBar({categories}) {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -195,7 +195,7 @@ function ResponsiveAppBar({categories}) {
 
           <Box sx={{ flexGrow: 1 , display: { xs: 'none', md: 'flex' }}}>
             <CartWidget />
-            <Tooltip title="Open settings">
+            <Tooltip title="Ajustes">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
               <Avatar sx={{ bgcolor: green[500] }}>
                 <AssignmentIcon />
@@ -220,7 +220,11 @@ function ResponsiveAppBar({categories}) {
             >
               {settings.map((setting) => (
                 <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
+                  <Link to={`/${setting}`} >
+                    <Typography >
+                        {setting}
+                    </Typography>
+                  </Link> 
                 </MenuItem>
               ))}
             </Menu>

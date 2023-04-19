@@ -12,6 +12,9 @@ import { lightGreen, lime } from '@mui/material/colors';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import Spinner from './assets/components/Spinner'
 import Cart from './assets/components/Cart'
+import db from '../db/firebase-config'
+import { getDocs , collection } from 'firebase/firestore'
+import CreateUser from './assets/components/CreateUser'
 
 const theme = createTheme({
   palette: {
@@ -21,10 +24,19 @@ const theme = createTheme({
 });
 
 function App() {
-  
+
+  const [users, setUsers] = useState([])
+  const usersRef = collection(db, 'users')
   const [categorias, setCategorias] = useState([])
   const [loading, setLoading] = useState(true)
 
+  const getUsers = async () => {
+    const usersCollection = await getDocs(usersRef)
+    const users = usersCollection.docs.map(doc => ({
+      ...doc.data(), 
+      id: doc.id}))
+    console.log(users[0].email)
+  }
 
 
   const fetchProductos = async () => {
@@ -35,6 +47,7 @@ function App() {
 
   useEffect(() => {
     fetchProductos()
+    getUsers()
   }, [])
     
   if (loading) { return <Spinner/>}
@@ -51,6 +64,7 @@ function App() {
         <Route path="/contacto" element={<Contacto/>}/>
         <Route path="/ubicacion" element={<Ubicacion/>}/>
         <Route path="/carrito" element={<Cart/>}/>
+        <Route path="/registrar" element={<CreateUser/>}/>
       </Routes>
     </div>
   </ThemeProvider>

@@ -6,6 +6,7 @@ import Typography from '@mui/material/Typography';
 import { Button, CardActionArea, CardActions } from '@mui/material';
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react'
+import style from './productDetail.module.css'
 
 export default function ProductDetail({}) {
     const [producto, setProducto] = useState([])
@@ -18,12 +19,14 @@ export default function ProductDetail({}) {
 
     useEffect(() => {
         getProducto()
-    }, [])
+      }, [])
+      
+      
+      const {title, thumbnail_id, price, available_quantity } = producto
+      
+      return (
 
-
-    const {title, thumbnail_id, price, available_quantity } = producto
-
-  return (
+    <div className={style.container}>
 
     <Card sx={{ maxWidth: 400 }} >
       <CardActionArea>
@@ -52,5 +55,6 @@ export default function ProductDetail({}) {
         </Button>
       </CardActions>
     </Card>
+  </div>
   );
 }
