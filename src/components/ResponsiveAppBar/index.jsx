@@ -12,13 +12,13 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import { green } from '@mui/material/colors';
-import AssignmentIcon from '@mui/icons-material/Assignment';
 import { Link } from 'react-router-dom';
 import CartWidget from "../CartWidget"
+import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 
 const pages1 = ['home', 'productos'];
 const pages2 = ['contacto' , 'ubicacion'];
-const settings = ['Login', 'Logout', 'Admin', 'Registrar'];
+const settings = ['Login','Registrar'];
 
 function ResponsiveAppBar({categories}) {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -198,7 +198,7 @@ function ResponsiveAppBar({categories}) {
             <Tooltip title="Ajustes">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
               <Avatar sx={{ bgcolor: green[500] }}>
-                <AssignmentIcon />
+                <ManageAccountsIcon />
               </Avatar>
               </IconButton>
             </Tooltip>

@@ -29,11 +29,6 @@ export default function ProductItem({product}) {
         </CardContent>
       </CardActionArea>
       </Link>
-      <CardActions>
-        <Button size="small" color="primary">
-          AGREGAR AL CARRITO
-        </Button>
-      </CardActions>
     </Card>
   );
 }

@@ -1,20 +1,22 @@
 import { Navigate, Route, Routes } from 'react-router-dom'
 import './App.css'
-import Contacto from './assets/components/Contacto'
-import Home from './assets/components/Home'
-import ResponsiveAppBar from './assets/components/ResponsiveAppBar'
-import Ubicacion from './assets/components/Ubicacion'
-import ItemListContainer from './assets/components/ItemListContainer'
-import { useEffect, useState } from 'react'
+import Contacto from './components/Contacto'
+import Home from './components/Home'
+import ResponsiveAppBar from './components/ResponsiveAppBar'
+import Ubicacion from './components/Ubicacion'
+import ItemListContainer from './components/ItemListContainer'
+import { useEffect, useState, useContext } from 'react'
 import axios from 'axios'
-import ProductDetail from './assets/components/ProductDetail'
+import ProductDetail from './components/ProductDetail'
 import { lightGreen, lime } from '@mui/material/colors';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
-import Spinner from './assets/components/Spinner'
-import Cart from './assets/components/Cart'
-import db from '../db/firebase-config'
-import { getDocs , collection } from 'firebase/firestore'
-import CreateUser from './assets/components/CreateUser'
+import Spinner from './components/Spinner'
+import Cart from './components/Cart'
+/* import db from '../db/firebase-config'
+import { getDocs , collection } from 'firebase/firestore' */
+import CreateUser from './components/CreateUser'
+import Login from './components/Login'
+import  {CartContext} from './contexts/CartContext'
 
 const theme = createTheme({
   palette: {
@@ -25,18 +27,19 @@ const theme = createTheme({
 
 function App() {
 
-  const [users, setUsers] = useState([])
-  const usersRef = collection(db, 'users')
+/*   const [users, setUsers] = useState([])
+  const usersRef = collection(db, 'users') */
   const [categorias, setCategorias] = useState([])
   const [loading, setLoading] = useState(true)
-
-  const getUsers = async () => {
+  const [carrito, setCarrito] = useState(JSON.parse(localStorage.getItem("carrito")))
+  console.log(carrito.length)
+/*   const getUsers = async () => {
     const usersCollection = await getDocs(usersRef)
     const users = usersCollection.docs.map(doc => ({
       ...doc.data(), 
       id: doc.id}))
     console.log(users[0].email)
-  }
+  } */
 
 
   const fetchProductos = async () => {
@@ -47,14 +50,18 @@ function App() {
 
   useEffect(() => {
     fetchProductos()
-    getUsers()
+    setCarrito(JSON.parse(localStorage.getItem("carrito")))
+/*     getUsers() */
   }, [])
     
   if (loading) { return <Spinner/>}
 
-  return <ThemeProvider theme={theme} > 
+  return (
+  <ThemeProvider theme={theme} >
     <div>
-      <ResponsiveAppBar categories={categorias} />
+      <CartContext.Provider value="6" />
+        <ResponsiveAppBar categories={categorias} />
+      <CartContext.Provider />
       <Routes >
         <Route path="/" element={<Navigate to="/home" />}/>
         <Route path="/home" element={<Home/>}/>
@@ -64,10 +71,12 @@ function App() {
         <Route path="/contacto" element={<Contacto/>}/>
         <Route path="/ubicacion" element={<Ubicacion/>}/>
         <Route path="/carrito" element={<Cart/>}/>
+        <Route path="/login" element={<Login/>}/>
         <Route path="/registrar" element={<CreateUser/>}/>
       </Routes>
     </div>
   </ThemeProvider>
+  )
 }
 
 export default App
