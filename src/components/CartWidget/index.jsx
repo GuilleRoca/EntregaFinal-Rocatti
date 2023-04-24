@@ -2,12 +2,11 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { Badge } from '@mui/material';
 import { Link } from 'react-router-dom';
 import style from './cart.module.css'
-import { useEffect, useState , useContext } from 'react'
+import { useContext } from 'react'
 import {CartContext} from '../../contexts/CartContext'
 
 const CartWidget = () => {
-  const value = useContext(CartContext)
-  console.log(value)
+  const value = useContext(CartContext).carrito
 
     return (
       <Link to={"../carrito"}>

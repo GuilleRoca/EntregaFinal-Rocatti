@@ -6,7 +6,6 @@ import swal from 'sweetalert'
 
 const CreateUser = () => {
 
-    const [users, setUsers] = useState([])
     const usersRef = collection(db, 'users')
     const [inputNombre , setInputNombre ] = useState("")
     const [inputApellido , setInputApellido ] = useState("")
@@ -15,19 +14,11 @@ const CreateUser = () => {
     const [inputEmail2 , setInputEmail2 ] = useState("")
     const [inputPass , setInputPass ] = useState("")
 
-    const getUsers = async () => {
-        const usersCollection = await getDocs(usersRef)
-        const users = usersCollection.docs.map((doc) => ({
-          ...doc.data(), 
-          id: doc.id
-        }))
-        setUsers(users)    
-      }
 
     const addUser = async (e) => {
         e.preventDefault()
         
-        if (inputNombre === "" || inputApellido === "" || inputDni === "" || inputEmail === "" || inputPass === "") {
+        if (inputNombre === "" || inputApellido === "" || inputDni === "" || inputEmail === "" || inputEmail2==="" || inputPass === "") {
             swal("Error", "Todos los campos son obligatorios", "error")
             return
         }else if(inputEmail !== inputEmail2){
@@ -49,15 +40,12 @@ const CreateUser = () => {
 
     }
 
-    useEffect(() => {
-        getUsers()
-    }, [])
-
     const handleReset  = () => {
         setInputNombre("")
         setInputApellido("")
         setInputDni("")
         setInputEmail("")
+        setInputEmail2("")
         setInputPass("")
     }
 

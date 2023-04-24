@@ -31,8 +31,9 @@ function App() {
   const usersRef = collection(db, 'users') */
   const [categorias, setCategorias] = useState([])
   const [loading, setLoading] = useState(true)
-  const [carrito, setCarrito] = useState(JSON.parse(localStorage.getItem("carrito")))
-  console.log(carrito.length)
+
+
+
 /*   const getUsers = async () => {
     const usersCollection = await getDocs(usersRef)
     const users = usersCollection.docs.map(doc => ({
@@ -50,7 +51,6 @@ function App() {
 
   useEffect(() => {
     fetchProductos()
-    setCarrito(JSON.parse(localStorage.getItem("carrito")))
 /*     getUsers() */
   }, [])
     
@@ -59,9 +59,7 @@ function App() {
   return (
   <ThemeProvider theme={theme} >
     <div>
-      <CartContext.Provider value="6" />
-        <ResponsiveAppBar categories={categorias} />
-      <CartContext.Provider />
+      <ResponsiveAppBar categories={categorias} />
       <Routes >
         <Route path="/" element={<Navigate to="/home" />}/>
         <Route path="/home" element={<Home/>}/>

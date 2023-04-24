@@ -5,8 +5,10 @@ import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { Button, CardActionArea, CardActions, Input } from '@mui/material';
 import { useParams } from 'react-router-dom';
-import { useEffect, useState } from 'react'
+import { useEffect, useState , useContext } from 'react'
 import style from './productDetail.module.css'
+import {CartContext} from '../../contexts/CartContext'
+
 
 export default function ProductDetail({}) {
     const [producto, setProducto] = useState([])
@@ -18,12 +20,15 @@ export default function ProductDetail({}) {
         setProducto(data[0].body)
     }
 
+    const addCarrito = useContext(CartContext).addCarrito
+
     const addItemsCart = () => {
       let carrito = []
       const productosElegidos = JSON.parse(localStorage.getItem("carrito"))
       carrito = productosElegidos || []
       carrito.push({title, price, inputCant})
       localStorage.setItem('carrito', JSON.stringify(carrito))
+      addCarrito()
       Toastify({
         text: "Articulo agregado al carrito correctamente",
         duration: 3000,
