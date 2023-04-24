@@ -30,7 +30,7 @@ const CreateUser = () => {
                 apellido: inputApellido,
                 dni: inputDni,
                 email: inputEmail,
-                password: inputPass,
+                pass: inputPass,
                 admin: false
             }
             await addDoc(usersRef, user )
